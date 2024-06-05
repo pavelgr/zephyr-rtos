@@ -1,0 +1,91 @@
+# Copyright (c) 2020 Facebook, Inc. and its affiliates
+# Copyright (c) 2024 pck
+# SPDX-License-Identifier: Apache-2.0
+
+# Common fields for BMP280
+
+include: sensor-device.yaml
+
+properties:
+  int-gpios:
+    type: phandle-array
+
+  osr-temp:
+    type: int
+    description: |
+      Default temperature oversampling rate. Only the following values are
+      allowed:
+        0 samples, skip measurement (default; chip reset value)
+        1 sample, 16-bit, .0050 C
+        2 samples, 17-bit, .0025 C
+        4 samples, 18-bit, .0012 C
+        8 samples, 19-bit, .0006 C
+        16 samples, 20-bit, .0003 C
+    default: 0
+    enum:
+      - 0
+      - 1
+      - 2
+      - 4
+      - 8
+      - 16
+
+  osr-press:
+    type: int
+    description: |
+      Default pressure oversampling rate. Only the following values are
+      allowed:
+        0 samples, skip measurement (default; chip reset value)
+        1 sample, 16-bit, 2.62 Pa
+        2 samples, 17-bit, 1.31 Pa
+        4 samples, 18-bit, 0.66 Pa
+        8 samples, 19-bit, 0.33 Pa
+        16 samples, 20-bit, 0.16 Pa
+    default: 0
+    enum:
+      - 0
+      - 1
+      - 2
+      - 4
+      - 8
+      - 16
+
+  iir-filter:
+    type: int
+    description: |
+      Default IIR filter coefficient. The default 0 is the chip reset value.
+    default: 0
+    enum:
+      - 0
+      - 2
+      - 4
+      - 8
+      - 16
+
+  time-sb:
+    type: int
+    description: |
+      Stand-by time duration between measurements in normal mode. Only the following values are allowed:
+        5       - 0.5ms  (default; chip reset value)
+        625     - 62.5ms
+        1250    - 125ms
+        2500    - 250ms
+        5000    - 500ms
+        10000   - 1000ms
+        20000   - 2000ms
+        40000   - 4000ms
+    default: 5
+    enum:
+      - 5
+      - 625
+      - 1250
+      - 2500
+      - 5000
+      - 10000
+      - 20000
+      - 40000
+
+  spi3w-en:
+    type: boolean
+    description: |
+      SPI 3-wire enable. The default 0 is the chip reset value.

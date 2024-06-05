@@ -1,0 +1,30 @@
+# Copyright (c) 2020 Facebook, Inc. and its affiliates
+# Copyright (c) 2024 pck
+# SPDX-License-Identifier: Apache-2.0
+
+menuconfig BMP280
+	bool "Bosch BMP280 pressure sensor"
+	default y
+	depends on DT_HAS_BOSCH_BMP280_ENABLED
+	select I2C if $(dt_compat_on_bus,$(DT_COMPAT_BOSCH_BMP280),i2c)
+	select SPI if $(dt_compat_on_bus,$(DT_COMPAT_BOSCH_BMP280),spi)
+	help
+	  Enable driver for the Bosch BMP280 pressure sensor
+
+if BMP280
+
+config BMP280_BUS_I2C
+	bool
+	default y
+	depends on $(dt_compat_on_bus,$(DT_COMPAT_BOSCH_BMI270),i2c)
+
+config BMP280_BUS_SPI
+	bool
+	default y
+	depends on $(dt_compat_on_bus,$(DT_COMPAT_BOSCH_BMI270),spi)
+
+config BMP280_REBOOT_ON_INIT
+	bool "Soft reboot the sernsor on init, adds 2s to init duration."
+	default y
+
+endif # BMP280
